@@ -17,9 +17,9 @@ namespace b3 {
 	export let CONDITION = 'condition';
 
 	export function createUUID() {
-		var s = [];
-		var hexDigits = "0123456789abcdef";
-		for (var i = 0; i < 36; i++) {
+		let s = [];
+		let hexDigits = "0123456789abcdef";
+		for (let i = 0; i < 36; i++) {
 			s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
 		}
 		// bits 12-15 of the time_hi_and_version field to 0010
@@ -30,14 +30,14 @@ namespace b3 {
 
 		s[8] = s[13] = s[18] = s[23] = "-";
 
-		var uuid = s.join("");
+		let uuid = s.join("");
 		return uuid;
 	};
 
 
 	export function randomRange(len: number) {
 		let indies = [],i=0;while(i<len)indies.push(i++);
-		var m = indies.length;
+		let m = indies.length;
 		while (m) {
 			let i = Math.floor(Math.random() * m--);
 			[indies[m], indies[i]] = [indies[i], indies[m]];

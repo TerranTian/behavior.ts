@@ -3,21 +3,19 @@
 namespace b3 {
 	export class BaseNode {
 		readonly id: string;
-		name: string;
 
-		category = null
 		parameters = null
 		constructor(params) {
 			this.id = createUUID()
 			this.parameters = params;
 		}
 
-		_execute(tick) {
+		execute(tick) {
 			this._enter(tick);
 			if (!tick.blackboard.get('isOpen', tick.tree.id, this.id)) {
 				this._open(tick);
 			}
-			var status = this._tick(tick);
+			let status = this._tick(tick);
 			if (status !== Status.RUNNING) {
 				this._close(tick);
 			}
@@ -25,7 +23,7 @@ namespace b3 {
 
 			return status;
 		}
-		
+
 		private _enter(tick) {
 			tick._enterNode(this);
 			this.enter(tick);
@@ -39,7 +37,7 @@ namespace b3 {
 			tick._tickNode(this);
 			return this.tick(tick);
 		}
-		private _close(tick) {
+		_close(tick) {
 			tick._closeNode(this);
 			tick.blackboard.set('isOpen', false, tick.tree.id, this.id);
 			this.close(tick);

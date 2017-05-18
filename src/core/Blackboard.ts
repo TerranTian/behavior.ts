@@ -22,7 +22,7 @@ namespace b3 {
 		}
 
 		private _getNodeMemory(treeMemory, nodeScope:string) {
-			var memory = treeMemory.nodeMemory;
+			let memory = treeMemory.nodeMemory;
 			if (!memory[nodeScope]) {
 				memory[nodeScope] = {};
 			}
@@ -31,7 +31,7 @@ namespace b3 {
 		}
 
 		private _getMemory(treeScope:string, nodeScope:string) {
-			var memory = this._baseMemory;
+			let memory = this._baseMemory;
 
 			if (treeScope) {
 				memory = this._getTreeMemory(treeScope);
@@ -45,12 +45,12 @@ namespace b3 {
 		}
 
 		set(key:string|number, value:any, treeScope:string, nodeScope:string) {
-			var memory = this._getMemory(treeScope, nodeScope);
+			let memory = this._getMemory(treeScope, nodeScope);
 			memory[key] = value;
 		}
 
 		get(key:string|number, treeScope:string, nodeScope:string) {
-			var memory = this._getMemory(treeScope, nodeScope);
+			let memory = this._getMemory(treeScope, nodeScope);
 			return memory[key];
 		}
 	}

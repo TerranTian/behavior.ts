@@ -7,7 +7,6 @@ namespace b3 {
 		constructor(params){
 			super(params);
 			this.children = (params.children || []).slice(0);
-			this.category = COMPOSITE
 		}
 	}
 }

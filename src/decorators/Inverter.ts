@@ -3,10 +3,13 @@
 /// <reference path="../core/Tick.ts" />
 
 namespace b3 {
+	/**
+	 * 如果子节点返回success，则返回failure
+	 * 如果子节点返回failure, 则返回success
+	 */
 	export class Inverter extends Decorator {
 		constructor(params) {
 			super(params)
-			this.name = 'Inverter';
 		}
 
 		tick(tick) {
@@ -14,7 +17,7 @@ namespace b3 {
 				return Status.ERROR;
 			}
 
-			var status = this.child._execute(tick);
+			let status = this.child.execute(tick);
 
 			if (status == Status.SUCCESS) {
 				status = Status.FAILURE;

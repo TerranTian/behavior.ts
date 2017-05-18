@@ -3,9 +3,6 @@
 
 namespace b3{
 	export class Action extends BaseNode {
-		constructor(params) {
-			super(params)
-			this.category = ACTION;
-		}
+		
 	}
 }

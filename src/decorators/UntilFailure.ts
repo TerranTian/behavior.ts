@@ -3,20 +3,25 @@
 /// <reference path="../core/Tick.ts" />
 
 namespace b3 {
+	/**
+	 * 循环执行子节点，直到子节点返回failure
+	 * 
+	 * 如果子节点返回的不是failure，则会向父节点返回running
+	 * 
+	 */
 	export class UntilFailure extends Decorator {
 		constructor(params) {
 			super(params)
-			this.name = 'UntilFailure';
 		}
 
 		tick(tick) {
 			if (!this.child)return Status.ERROR;
 
-			let status = this.child._execute(tick);
-			if(status !=  Status.FAILURE){
+			let status = this.child.execute(tick);
+			if(status ==  Status.SUCCESS){
 				return Status.RUNNING
 			}
-			return Status.FAILURE;
+			return status;
 		}
 	}
 }

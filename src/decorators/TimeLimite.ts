@@ -21,10 +21,6 @@ namespace b3 {
 			tick.blackboard.set('startTime', startTime, tick.tree.id, this.id);
 		}
 		tick(tick) {
-			if (!this.child) {
-				return Status.ERROR;
-			}
-
 			let currTime = (new Date()).getTime();
 			let startTime = tick.blackboard.get('startTime', tick.tree.id, this.id);
 

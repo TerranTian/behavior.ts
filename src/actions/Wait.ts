@@ -4,7 +4,7 @@
 
 namespace b3 {
 	export class Wait extends Action {
-		private endTime: number = 0
+		protected endTime: number = 0
 		constructor(params) {
 			super(params)
 			this.endTime = params.milliseconds || 0;

@@ -13,10 +13,6 @@ namespace b3 {
 		}
 
 		tick(tick) {
-			if (!this.child) {
-				return Status.ERROR;
-			}
-
 			let status = this.child.execute(tick);
 
 			if (status == Status.SUCCESS) {

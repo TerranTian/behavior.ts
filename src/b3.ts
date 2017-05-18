@@ -6,15 +6,8 @@ namespace b3 {
 	export enum Status {
 		SUCCESS = 1,
 		FAILURE = 2,
-		RUNNING = 3,
-		ERROR = 4
+		RUNNING = 3
 	}
-
-	// Node categories
-	export let COMPOSITE = 'composite';
-	export let DECORATOR = 'decorator';
-	export let ACTION = 'action';
-	export let CONDITION = 'condition';
 
 	export function createUUID() {
 		let s = [];
@@ -43,5 +36,9 @@ namespace b3 {
 			[indies[m], indies[i]] = [indies[i], indies[m]];
 		}
 		return indies;
+	}
+
+	export function randomInter(min,max){
+		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 }

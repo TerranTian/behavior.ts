@@ -19,8 +19,6 @@ namespace b3 {
 		}
 
 		tick(tick) {
-			if (!this.child)return Status.ERROR;
-
 			let count = tick.blackboard.get('count', tick.tree.id, this.id);
 
 			if (count >= this.maxLoop) {
@@ -28,28 +26,9 @@ namespace b3 {
 			}
 
 			let status = this.child.execute(tick);
-			if (status == Status.RUNNING){
-				tick.blackboard.set('i', count + 1, tick.tree.id, this.id);
-			}
+			tick.blackboard.set('count', count + 1, tick.tree.id, this.id);
 
 			return status;
 		}
-
-		// tick(tick) {
-		// 	if (!this.child)return Status.ERROR;
-
-		// 	let count = tick.blackboard.get('count', tick.tree.id, this.id);
-
-		// 	if (count < this.maxLoop) {
-		// 		let status = this.child._execute(tick);
-
-		// 		if (status == Status.SUCCESS || status == Status.FAILURE)
-		// 			tick.blackboard.set('i', count + 1, tick.tree.id, this.id);
-
-		// 		return status;
-		// 	}
-
-		// 	return Status.FAILURE;
-		// }
 	}
 }

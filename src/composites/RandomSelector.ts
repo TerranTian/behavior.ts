@@ -11,45 +11,24 @@ namespace b3 {
 
 		open(tick) {
 			tick.blackboard.set('indies', b3.randomRange(this.children.length), tick.tree.id, this.id);
-			tick.blackboard.set('runningChild', 0, tick.tree.id, this.id);
+			tick.blackboard.set('runningIndex', 0, tick.tree.id, this.id);
 		}
 
 		tick(tick) {
 			let indies:number[] = tick.blackboard.get('indies', tick.tree.id, this.id); 
-			let index = tick.blackboard.get('runningChild', tick.tree.id, this.id);
+			let index = tick.blackboard.get('runningIndex', tick.tree.id, this.id);
+			for (let i = index; i < indies.length; i++) {
+				let status = this.children[indies[i]].execute(tick);
 
-			if(index >= this.children.length){
-				return Status.FAILURE;
-			}
-			
-			let status = this.children[indies[index]].execute(tick);
-			if(status == Status.FAILURE){
-				tick.blackboard.set('runningChild', index+1, tick.tree.id, this.id);
-				return Status.RUNNING;
-			}else if(status == Status.RUNNING){
-				tick.blackboard.set('runningChild', index, tick.tree.id, this.id);
-				return Status.RUNNING;
+				if(status == Status.FAILURE) continue;
+				
+				if (status === Status.RUNNING) {
+					tick.blackboard.set('runningIndex', i, tick.tree.id, this.id);
+				}
+				return status;	
 			}
 
-			return status;
+			return Status.FAILURE;
 		}
-
-		// tick(tick) {
-		// 	let indies:number[] = tick.blackboard.get('indies', tick.tree.id, this.id); 
-		// 	let child = tick.blackboard.get('runningChild', tick.tree.id, this.id);
-		// 	for (let i = child; i < indies.length; i++) {
-		// 		let status = this.children[indies[i]]._execute(tick);
-
-		// 		if (status !== Status.FAILURE) {
-		// 			if (status === Status.RUNNING) {
-		// 				tick.blackboard.set('runningChild', i, tick.tree.id, this.id);
-		// 			}
-
-		// 			return status;
-		// 		}
-		// 	}
-
-		// 	return Status.FAILURE;
-		// }
 	}
 }

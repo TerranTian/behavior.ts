@@ -10,6 +10,13 @@ namespace b3 {
 	 * 
 	 * 当子节点返回running时，会终止后续节点的执行，并记住该子节点，下次tick时会从该子节点开始
 	 * 执行
+	 * 
+	 * 
+	 * It will return success as soon as one of its child tasks return success. 
+	 * If a child task returns failure then it will sequentially run the next task. 
+	 * If a child node return running it will return running.
+	 * If no child task returns success then it will return failure.
+	 *
 	 */
 
 	export class Selector extends Composite {
@@ -20,38 +27,18 @@ namespace b3 {
 
 		tick(tick) {
 			let index = tick.blackboard.get('runningIndex', tick.tree.id, this.id);
-			if (index >= this.children.length) {
-				return Status.FAILURE
+			for (let i = index; i < this.children.length; i++) {
+				let status = this.children[i].execute(tick);
+
+				if(status == Status.FAILURE) continue;
+				
+				if (status === Status.RUNNING) {
+					tick.blackboard.set('runningIndex', i, tick.tree.id, this.id);
+				}
+				return status
 			}
 
-			let status = this.children[index].execute(tick);
-			if (status == Status.FAILURE) {
-				tick.blackboard.set('runningIndex', index + 1, tick.tree.id, this.id);
-				return Status.RUNNING;
-			}
-			else if (status === Status.RUNNING) {
-				tick.blackboard.set('runningIndex', index, tick.tree.id, this.id);
-				return Status.RUNNING;
-			}
-
-			return status;
+			return Status.FAILURE;
 		}
-
-		// tick(tick) {
-		// 	let child = tick.blackboard.get('runningChild', tick.tree.id, this.id);
-		// 	for (let i = child; i < this.children.length; i++) {
-		// 		let status = this.children[i]._execute(tick);
-
-		// 		if (status !== Status.FAILURE) {
-		// 			if (status === Status.RUNNING) {
-		// 				tick.blackboard.set('runningChild', i, tick.tree.id, this.id);
-		// 			}
-
-		// 			return status;
-		// 		}
-		// 	}
-
-		// 	return Status.FAILURE;
-		// }
 	}
 }

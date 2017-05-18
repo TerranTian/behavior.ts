@@ -20,10 +20,6 @@ namespace b3 {
 		}
 
 		tick(tick) {
-			if (!this.child) {
-				return Status.ERROR;
-			}
-
 			let currTime = (new Date()).getTime();
 			let startTime = tick.blackboard.get('startTime', tick.tree.id, this.id);
 

@@ -1,8 +1,4 @@
 namespace b3 {
-	export let VERSION = '0.2.0';
-
-	// Returning status
-
 	export enum Status {
 		SUCCESS = 1,
 		FAILURE = 2,

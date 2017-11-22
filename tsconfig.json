@@ -4,6 +4,7 @@
     "target": "es5",
     "removeComments": true,
     "sourceMap": true,
+    "declaration": true,
     "outFile": "build/bundle.js"
   },
   "include": [

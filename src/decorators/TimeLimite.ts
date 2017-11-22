@@ -26,8 +26,6 @@ namespace b3 {
 
 			let status = this.child.execute(tick);
 			if (currTime - startTime > this.maxTime) {
-				//force to close the action node
-				this.child._close(tick);
 				return Status.FAILURE;
 			}
 

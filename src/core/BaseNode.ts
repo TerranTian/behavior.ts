@@ -33,11 +33,12 @@ namespace b3 {
 			tick.blackboard.set('isOpen', true, tick.tree.id, this.id);
 			this.open(tick);
 		}
+		
 		private _tick(tick): b3.Status {
 			tick._tickNode(this);
 			return this.tick(tick);
 		}
-		_close(tick) {
+		private _close(tick) {
 			tick._closeNode(this);
 			tick.blackboard.set('isOpen', false, tick.tree.id, this.id);
 			this.close(tick);

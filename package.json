@@ -2,6 +2,7 @@
   "name": "behavior.ts",
   "version": "1.0.1",
   "license": "MIT",
+  "description": "typescript 版行为树",
   "scripts": {
     "start": "node build/b3.js",
     "build": "tsc"

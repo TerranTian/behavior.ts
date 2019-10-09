@@ -1,12 +1,9 @@
-/// <reference path="../b3.ts" />
-/// <reference path="./Action.ts" />
+import { Action } from "./Action";
+import { BaseNode } from "./BaseNode";
 
-namespace b3 {
-	export class Decorator extends BaseNode {
-		child:Action
-		constructor(params){
-			super(params);
-			this.child = params.child || null;
-		}
+export class Decorator extends BaseNode {
+	constructor(protected child:Action){
+		super();
+		this.children = [child];
 	}
 }

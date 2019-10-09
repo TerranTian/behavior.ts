@@ -3,9 +3,10 @@
     "rootDir": "src",
     "target": "es5",
     "removeComments": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "declaration": true,
-    "outFile": "build/bundle.js"
+    "outDir": "build",
+    "importHelpers": true
   },
   "include": [
     "./src/**/*.ts"

@@ -1,27 +1,24 @@
-/// <reference path="../b3.ts" />
-/// <reference path="../core/Decorator.ts" />
-/// <reference path="../core/Tick.ts" />
+import { Decorator } from "../core/Decorator";
+import { Status } from "../core/Status";
 
-namespace b3 {
-	/**
-	 * 循环执行子节点，直到子节点返回success
-	 * 
-	 * 如果子节点返回的不是success，则会向父节点返回running
-	 * 
-	 */
-	export class UntilSuccess extends Decorator {
-		constructor(params) {
-			super(params)
+/**
+ * 循环执行子节点，直到子节点返回success
+ * 
+ * 如果子节点返回的不是success，则会向父节点返回running
+ * 
+ */
+export class UntilSuccess extends Decorator {
+	constructor(params) {
+		super(params)
+	}
+
+	onTick() {
+		let status = this.child.tick();
+		
+		if(status ==  Status.FAILURE){
+			return Status.RUNNING
 		}
 
-		tick(tick) {
-			let status = this.child.execute(tick);
-			
-			if(status ==  Status.FAILURE){
-				return Status.RUNNING
-			}
-
-			return status;
-		}
+		return status;
 	}
 }

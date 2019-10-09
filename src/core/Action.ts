@@ -1,8 +1,5 @@
-/// <reference path="../b3.ts" />
-/// <reference path="./BaseNode.ts" />
+import { BaseNode } from "./BaseNode";
 
-namespace b3{
-	export class Action extends BaseNode {
-		
-	}
+export class Action extends BaseNode {
+    
 }

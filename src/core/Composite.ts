@@ -1,12 +1,8 @@
-/// <reference path="../b3.ts" />
-/// <reference path="./BaseNode.ts" />
+import { BaseNode } from "./BaseNode";
 
-namespace b3 {
-	export class Composite extends BaseNode {
-		children:BaseNode[]
-		constructor(params){
-			super(params);
-			this.children = (params.children || []).slice(0);
-		}
+export class Composite extends BaseNode {
+	constructor(children:BaseNode[] = []){
+		super();
+		this.children = children;
 	}
 }

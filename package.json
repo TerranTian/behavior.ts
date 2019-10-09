@@ -1,13 +1,28 @@
 {
   "name": "behavior.ts",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "license": "MIT",
   "description": "typescript 版行为树",
   "scripts": {
+    "prepublish": "npm run build",
     "start": "node build/b3.js",
     "build": "tsc"
   },
   "devDependencies": {
     "@types/node": "^7.0.5"
+  },
+  "main": "build/b3.js",
+  "types": "build/b3.d.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TerranTian/behavior.ts.git"
+  },
+  "author": "terran.tian",
+  "bugs": {
+    "url": "https://github.com/TerranTian/behavior.ts/issues"
+  },
+  "homepage": "https://github.com/TerranTian/behavior.ts#readme",
+  "dependencies": {
+    "tslib": "^1.10.0"
   }
 }

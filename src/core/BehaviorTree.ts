@@ -1,32 +1,20 @@
-/// <reference path="../b3.ts" />
-/// <reference path="./BaseNode.ts" />
-/// <reference path="./Tick.ts" />
+import { BaseNode } from "./BaseNode";
 
-namespace b3 {
-	export class BehaviorTree {
-		readonly id: string
-		private _root: BaseNode
+import { Action } from "./Action";
 
-		debug = null
-		constructor(params) {
-			this.id = createUUID();
-			this._root = params.root
-		}
+export class BehaviorTree {
+	private _root: BaseNode
+	readonly target;
 
-		tick(target, blackboard) {
-			if (!blackboard) {
-				throw 'The blackboard parameter is obligatory and must be an instance of b3.Blackboard';
-			}
+	constructor(node:Action,target) {
+		this._root = node;
+		this._root.setTree(this);
+		
+		this.target = target;
+	}
 
-			let tick = new Tick();
-			tick.debug = this.debug;
-			tick.target = target;
-			tick.blackboard = blackboard;
-			tick.tree = this;
-
-			let state = this._root.execute(tick);
-
-			return state;
-		}
+	tick() {
+		let status = this._root.tick();
+		return status;
 	}
 }

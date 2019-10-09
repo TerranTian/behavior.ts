@@ -1,35 +1,30 @@
-/// <reference path="../b3.ts" />
-/// <reference path="../core/Decorator.ts" />
-/// <reference path="../core/Tick.ts" />
+import { Decorator } from "../core/Decorator";
+import { Status } from "../core/Status";
+import { Action } from "../core/Action";
 
-namespace b3 {
-	/**
-	 * 用于指定子节点的最长运行时间
-	 * 如果子节点的的运行时间超过了maxTime，则取消子节点的运行，直接返回failure，
-	 * 否则返回子节点的返回值
-	 * 
-	 */
-	export class TimeLimite extends Decorator {
-		maxTime = 0
-		constructor(params) {
-			super(params)
-			this.maxTime = params.maxTime;
+
+/**
+ * 用于指定子节点的最长运行时间
+ * 如果子节点的的运行时间超过了maxTime，则取消子节点的运行，直接返回failure，
+ * 否则返回子节点的返回值
+ * 
+ */
+export class TimeLimite extends Decorator {
+	constructor(child:Action,public maxTime = 0) {
+		super(child)
+	}
+
+	private _startTime:number = 0
+	onOpen() {
+		this._startTime = Date.now();
+	}
+	onTick() {
+		let currTime =Date.now();;
+		let status = this.child.tick();
+		if (currTime - this._startTime > this.maxTime) {
+			return Status.FAILURE;
 		}
 
-		open(tick) {
-			let startTime = (new Date()).getTime();
-			tick.blackboard.set('startTime', startTime, tick.tree.id, this.id);
-		}
-		tick(tick) {
-			let currTime = (new Date()).getTime();
-			let startTime = tick.blackboard.get('startTime', tick.tree.id, this.id);
-
-			let status = this.child.execute(tick);
-			if (currTime - startTime > this.maxTime) {
-				return Status.FAILURE;
-			}
-
-			return status;
-		}
+		return status;
 	}
 }

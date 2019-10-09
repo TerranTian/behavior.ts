@@ -1,58 +1,56 @@
-/// <reference path="../b3.ts" />
+import { createUUID } from "./Helper";
+import { Status } from "./Status";
+import { BehaviorTree } from "./BehaviorTree";
+export class BaseNode {
 
-namespace b3 {
-	export class BaseNode {
-		readonly id: string;
+	children:BaseNode[] = null;
 
-		parameters = null
-		constructor(params) {
-			this.id = createUUID()
-			this.parameters = params;
+	private _tree:BehaviorTree = null;
+	setTree(tree:BehaviorTree){
+		this._tree = tree;
+		if(this.children && this.children.length>0){
+			this.children.forEach(child=>child._tree = tree);
 		}
-
-		execute(tick) {
-			this._enter(tick);
-			if (!tick.blackboard.get('isOpen', tick.tree.id, this.id)) {
-				this._open(tick);
-			}
-			let status = this._tick(tick);
-			if (status !== Status.RUNNING) {
-				this._close(tick);
-			}
-			this._exit(tick);
-
-			return status;
-		}
-
-		private _enter(tick) {
-			tick._enterNode(this);
-			this.enter(tick);
-		}
-		private _open(tick) {
-			tick._openNode(this);
-			tick.blackboard.set('isOpen', true, tick.tree.id, this.id);
-			this.open(tick);
-		}
-		
-		private _tick(tick): b3.Status {
-			tick._tickNode(this);
-			return this.tick(tick);
-		}
-		private _close(tick) {
-			tick._closeNode(this);
-			tick.blackboard.set('isOpen', false, tick.tree.id, this.id);
-			this.close(tick);
-		}
-
-		private _exit(tick) {
-			tick._exitNode(this);
-			this.exit(tick);
-		}
-
-		protected tick(tick): b3.Status { return Status.SUCCESS }
-		protected enter(tick) { }
-		protected open(tick) { }
-		protected close(tick) { }
-		protected exit(tick) { }
 	}
+	get tree(){
+		return this._tree;
+	}
+	
+	readonly id: string;
+	private _isOpened = false;
+	constructor() {
+		this.id = createUUID()
+	}
+
+	tick() {
+		if (!this._isOpened) {
+			this.open();
+		}
+		let status = this.onTick();
+		if (status !== Status.RUNNING) {
+			this.close();
+		}
+
+		return status;
+	}
+
+	private open() {
+		this._isOpened = true;
+		this.onOpen();
+	}
+
+	private close() {
+		if(!this._isOpened) return;
+
+		if(this.children && this.children.length>0){
+			this.children.forEach(child=>child.close());
+		}
+
+		this._isOpened = false;
+		this.onClose();
+	}
+
+	protected onTick(): Status { return Status.SUCCESS }
+	protected onOpen() { }
+	protected onClose() { }
 }

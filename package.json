@@ -1,6 +1,6 @@
 {
   "name": "behavior.ts",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "license": "MIT",
   "description": "typescript 版行为树",
   "scripts": {
@@ -24,5 +24,6 @@
   "homepage": "https://github.com/TerranTian/behavior.ts#readme",
   "dependencies": {
     "tslib": "^1.10.0"
-  }
+  },
+  "files": ["build/**/*"]
 }

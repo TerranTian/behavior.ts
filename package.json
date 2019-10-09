@@ -1,6 +1,6 @@
 {
   "name": "behavior.ts",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "license": "MIT",
   "description": "typescript 版行为树",
   "scripts": {
@@ -11,6 +11,7 @@
   "devDependencies": {
     "@types/node": "^7.0.5"
   },
+  "bundleDependencies":[],
   "main": "build/b3.js",
   "types": "build/b3.d.js",
   "repository": {

@@ -1,6 +1,6 @@
 {
   "name": "behavior.ts",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "MIT",
   "description": "typescript 版行为树",
   "scripts": {
